@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000000;
+    color: #fff;
+}
+
+#weather {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 25px;
+}
+
+path,
+line {
+    stroke: #ccc;
+    fill: none;
+}
+
+text {
+    fill: #ccc;
+    font-size: 14px;
+}
+
+g.tick line {
+    stroke: #2a2a2a;
+}
+
+.temperature-line {
+    stroke: url(#line-gradient);
+    stroke-width: 4px;
+}
+
+.weather-graph {
+    flex-grow: 1;
+}
