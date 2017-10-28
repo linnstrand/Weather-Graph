@@ -37,3 +37,7 @@ g.tick line {
 .weather-graph {
     flex-grow: 1;
 }
+
+/* circle {
+    fill:magenta;
+} */
