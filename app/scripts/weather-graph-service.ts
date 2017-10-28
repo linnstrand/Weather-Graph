@@ -12,21 +12,9 @@ export class weatherGraphService {
     formatMonth = d3.timeFormat('%B');
     formatYear = d3.timeFormat('%Y');
 
-    getNextRainMessage(data: { pcat: string, time: string }[]) {
-
-        var nextRain = data.filter(function (d, i) {
-            return d.pcat != 'no_prep';
-        })[0];
-
-        if (nextRain && nextRain.time) {
-            return 'Expect ' + nextRain.pcat + ' at ' + this.multiFormat(new Date(nextRain.time));
-        }
-        return '';
-    }
-
     //we have 60 temperatures (-30 to 30)
     generateColorData(data: weather[]) {
-        return data.map(function (d, i) {
+        return data.map((d, i) => {
             let hue = Math.floor(280 * (1 - (d.temp + 25) / 50));
             let hsl = "hsl(" + hue + " ,100%, 50%)";
             let percentage = Math.floor((i + 1) / data.length * 100) + "%";
@@ -38,13 +26,9 @@ export class weatherGraphService {
     }
 
     setTopLow(data: weather[]) {
-        var temps = data.map(function (d) {
-            return d.temp;
-        });
+        var temps = data.map(d => d.temp);
+        var winds = data.map(d => d.wind_speed);
 
-        var winds = data.map(function (d) {
-            return d.wind_speed;
-        });
         var minDate = this.firstDate(data);
         var maxDate = this.lastDate(data);
 

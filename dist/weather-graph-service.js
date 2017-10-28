@@ -12,15 +12,6 @@ define(["require", "exports", "d3"], function (require, exports, d3) {
             this.formatMonth = d3.timeFormat('%B');
             this.formatYear = d3.timeFormat('%Y');
         }
-        weatherGraphService.prototype.getNextRainMessage = function (data) {
-            var nextRain = data.filter(function (d, i) {
-                return d.pcat != 'no_prep';
-            })[0];
-            if (nextRain && nextRain.time) {
-                return 'Expect ' + nextRain.pcat + ' at ' + this.multiFormat(new Date(nextRain.time));
-            }
-            return '';
-        };
         //we have 60 temperatures (-30 to 30)
         weatherGraphService.prototype.generateColorData = function (data) {
             return data.map(function (d, i) {
@@ -34,12 +25,8 @@ define(["require", "exports", "d3"], function (require, exports, d3) {
             });
         };
         weatherGraphService.prototype.setTopLow = function (data) {
-            var temps = data.map(function (d) {
-                return d.temp;
-            });
-            var winds = data.map(function (d) {
-                return d.wind_speed;
-            });
+            var temps = data.map(function (d) { return d.temp; });
+            var winds = data.map(function (d) { return d.wind_speed; });
             var minDate = this.firstDate(data);
             var maxDate = this.lastDate(data);
             return {

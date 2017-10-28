@@ -73,7 +73,7 @@ export function drawGraph() {
         .data(colorData)
         .enter()
         .append('stop')
-        .attr('offset', function (d) {
+        .attr('offset', (d) => {
             return d.offset;
         })
         .attr('style', d => 'stop-color:' + d.color + ';');
@@ -82,7 +82,7 @@ export function drawGraph() {
     //construct x-axis
     svg.append('g')
         .classed('x-axis', true)
-        .attr('transform', function () {
+        .attr('transform', () => {
             return 'translate(' + margin + ',' + (height - margin) + ')';
         })
         .call(xAxis);
@@ -91,7 +91,7 @@ export function drawGraph() {
     svg.append('g')
         .classed('y-axis', true)
         .call(yAxis)
-        .attr('transform', function () {
+        .attr('transform', () => {
             return 'translate(' + margin + ',' + margin + ')';
         });
     svg.append('text')
@@ -104,7 +104,7 @@ export function drawGraph() {
     svg.append('g')
         .classed('y-axis-r', true)
         .call(yAxisR)
-        .attr('transform', function () {
+        .attr('transform', () => {
             return 'translate(' + (width - margin) + ',' + margin + ')';
         });
 
@@ -113,7 +113,7 @@ export function drawGraph() {
         .classed('temperature-line', true)
         .datum(data)
         .attr('d', weatherLine)
-        .attr('transform', function () {
+        .attr('transform', () => {
             return 'translate(' + margin + ',' + margin + ')';
         });
 
@@ -138,7 +138,7 @@ export function drawGraph() {
         .classed('wind-line', true)
         .datum(data)
         .attr('d', windLine)
-        .attr('transform', function () {
+        .attr('transform', () => {
             return 'translate(' + margin + ',' + margin + ')';
         });
 
