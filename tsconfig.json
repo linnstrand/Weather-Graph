@@ -6,7 +6,6 @@
     "sourceMap": true, /* Generates corresponding '.map' file. */
     /* Concatenate and emit output to single file. */
     /* "outFile": "./dist/app.js", /* Redirect output structure to the directory. */
-    "moduleResolution": "Node",
     "outDir": "./dist",
     "noEmitOnError": true,
     "experimentalDecorators": true,
