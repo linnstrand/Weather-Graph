@@ -3,22 +3,18 @@ import { weather } from './weather';
 import { SampleData } from './sample-data';
 import { weatherGraphService } from './weather-graph-service';
 
-interface ChartData {
-    q: number,
-    p: number
-}
-
 export function drawGraph() {
     try {
         console.log("Doing a thing");
 
-        const width = 1400;
+        const width = 1100;
         const height = 550;
         const margin = 35;
         const axisWidth = width - 2 * margin;
         const axisHeight = height - 2 * margin - 1;
         const service = new weatherGraphService;
-        const data = SampleData.data;
+        const data = SampleData.data.slice(0, 30);
+
         const range = service.setTopLow(data);
 
         const colorData = service.generateColorData(data);
@@ -55,10 +51,10 @@ export function drawGraph() {
             .y((d: any) => yScale(d.temp))
             .curve(d3.curveCardinal);
 
-        //wind line
-        // let windLine = d3.line<weather>()
-        //     .x(d => xScale(new Date(d.time)))
-        //     .y(d => yScaleR(d.wind_speed));
+        // wind line
+        let windLine = d3.line<weather>()
+            .x(d => xScale(new Date(d.time)))
+            .y(d => yScaleR(d.wind_speed));
 
         //axis
         let xAxis = d3.axisBottom(xScale)
@@ -125,13 +121,13 @@ export function drawGraph() {
             });
 
         //Wind line
-        // svg.append('path')
-        //     .classed('wind-line', true)
-        //     .datum(data)
-        //     .attr('d', windLine)
-        //     .attr('transform', function () {
-        //         return 'translate(' + margin + ',' + margin + ')';
-        //     });
+        svg.append('path')
+            .classed('wind-line', true)
+            .datum(data)
+            .attr('d', windLine)
+            .attr('transform', function () {
+                return 'translate(' + margin + ',' + margin + ')';
+            });
 
         //grid lines
         svg.selectAll('g.y-axis g.tick')
