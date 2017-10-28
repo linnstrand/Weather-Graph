@@ -1,6 +1,6 @@
 requirejs.config({
     paths: {
-        'd3': 'node_modules/d3/build/d3'
+        'd3': 'https://d3js.org/d3.v4'
     }
 });
 
