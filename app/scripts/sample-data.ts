@@ -1,5 +1,75 @@
 import { weather } from './weather';
 
+class weatherResponse {
+    public t: number;
+    public ws: number;
+}
+export class WeatherData {
+
+    static async getAll(): Promise<weather[]> {
+        if (!navigator.geolocation) {
+            console.log("Geolocation is not supported by this browser.");
+            return Promise.resolve(SampleData.data);
+        };
+
+        var position: Position;
+        let lat = 59.3669;
+        let lon = 17.9672;
+        navigator.geolocation.getCurrentPosition(_position => { position = _position });
+        if (position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+        }
+        try {
+            return await WeatherData.getWeatherAsync(lat, lon);
+        } catch (error) {
+            return SampleData.data;
+        }
+    }
+
+    static async getWeatherAsync(lat: number, lon: number): Promise<weather[]> {
+        let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${lon}/lat/${lat}/data.json`;
+        return new Promise<weather[]>((resolve, reject) => {
+            let request = new XMLHttpRequest();
+            request.onload = () => {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        let response = JSON.parse(request.responseText);
+                        resolve(WeatherData.getWeatherData(response));
+                    } else {
+                        reject(new Error(request.statusText));
+                    }
+                }
+            };
+            request.onerror = () => {
+                reject(new Error(request.statusText));
+            };
+
+            request.open("GET", url, true);
+            request.send();
+        });
+    }
+
+    static getWeatherData(response: any): weather[] {
+        {
+            let ts = response.timeSeries;
+
+            let weatherData: weather[] = ts.map(t => {
+                let params = new weatherResponse;
+                t.parameters.forEach(p => params[p.name] = (p.values || [0])[0]);
+                return {
+                    time: t.validTime,
+                    temp: params.t,
+                    wind_speed: params.ws,
+                };
+            });
+            return weatherData;
+        }
+    };
+
+}
+
+
 export class SampleData {
     public static readonly data: weather[] = [
         {

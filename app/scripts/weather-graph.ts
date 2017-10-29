@@ -1,16 +1,19 @@
 import * as d3 from 'd3';
 import { weather } from './weather';
-import { SampleData } from './sample-data';
+import { WeatherData } from './sample-data';
 import { weatherGraphService } from './weather-graph-service';
 
-export function drawGraph() {
+
+export async function drawGraph() {
+    const data: weather[] = await WeatherData.getAll();
+
     const width = 1100;
     const height = 550;
     const margin = 35;
     const axisWidth = width - 2 * margin;
     const axisHeight = height - 2 * margin - 1;
     const service = new weatherGraphService;
-    const data = SampleData.data.slice(0, 30);
+
 
     const range = service.setTopLow(data);
 
