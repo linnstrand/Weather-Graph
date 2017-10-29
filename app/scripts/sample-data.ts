@@ -12,14 +12,14 @@ export class WeatherData {
             return Promise.resolve(SampleData.data);
         };
 
-        var position: Position;
         let lat = 59.3669;
         let lon = 17.9672;
-        navigator.geolocation.getCurrentPosition(_position => { position = _position });
-        if (position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-        }
+
+        var promise = await new Promise<Position>(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        lat = promise.coords.latitude;
+        lon = promise.coords.longitude;
         try {
             return await WeatherData.getWeatherAsync(lat, lon);
         } catch (error) {
@@ -28,7 +28,7 @@ export class WeatherData {
     }
 
     static async getWeatherAsync(lat: number, lon: number): Promise<weather[]> {
-        let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${lon}/lat/${lat}/data.json`;
+        let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${lon.toFixed(6)}/lat/${lat.toFixed(6)}/data.json`;
         return new Promise<weather[]>((resolve, reject) => {
             let request = new XMLHttpRequest();
             request.onload = () => {
