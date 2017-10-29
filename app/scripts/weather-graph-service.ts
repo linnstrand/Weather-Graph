@@ -13,9 +13,31 @@ export class weatherGraphService {
     formatYear = d3.timeFormat('%Y');
 
     //we have 60 temperatures (-30 to 30)
+    //0 = 170
     generateColorData(data: weather[]) {
         return data.map((d, i) => {
-            let hue = Math.floor(280 * (1 - (d.temp + 25) / 50));
+            let hue = Math.floor(280 * (1 - (d.temp + 30) / 60));;
+            // if (d.temp > -4 && d.temp < 1) {
+            //     hue = Math.floor(280 * (1 - (d.temp + 25) / 60));
+            // }
+            // if (d.temp > 0 && d.temp < 4) {
+            //     hue = Math.floor(280 * (1 - (d.temp + 23) / 60));
+            // }
+            // if (d.temp > 5 && d.temp < 10) {
+            //     hue = Math.floor(280 * (1 - (d.temp + 20) / 60));
+            // }
+            if (hue > 90 && hue < 115) {
+                hue = hue * 0.9;
+            }
+            if (hue > 115 && hue < 140) {
+                hue = hue * 1.3;
+            }
+            // if (hue < 115) {
+            //     hue = 90;
+            // }
+            // if (hue > 115) {
+            //     hue = 140;
+            // }
             let hsl = "hsl(" + hue + " ,100%, 50%)";
             let percentage = Math.floor((i + 1) / data.length * 100) + "%";
             return {

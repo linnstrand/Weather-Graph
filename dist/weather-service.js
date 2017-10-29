@@ -70,7 +70,7 @@ define(["require", "exports"], function (require, exports) {
                         wind_speed: params.ws,
                     };
                 });
-                return weatherData;
+                return weatherData.slice(0, 30);
             }
         }
         ;
@@ -730,4 +730,4 @@ define(["require", "exports"], function (require, exports) {
     ];
     exports.SampleData = SampleData;
 });
-//# sourceMappingURL=sample-data.js.map
+//# sourceMappingURL=weather-service.js.map

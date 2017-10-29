@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { weather } from './weather';
-import { WeatherData } from './sample-data';
+import { WeatherData } from './weather-service';
 import { weatherGraphService } from './weather-graph-service';
 
 
@@ -9,7 +9,7 @@ export async function drawGraph() {
 
     const width = 1100;
     const height = 550;
-    const margin = 35;
+    const margin = 35; 6
     const axisWidth = width - 2 * margin;
     const axisHeight = height - 2 * margin - 1;
     const service = new weatherGraphService;

@@ -6,15 +6,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-define(["require", "exports", "d3", "./sample-data", "./weather-graph-service"], function (require, exports, d3, sample_data_1, weather_graph_service_1) {
+define(["require", "exports", "d3", "./weather-service", "./weather-graph-service"], function (require, exports, d3, weather_service_1, weather_graph_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function drawGraph() {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield sample_data_1.WeatherData.getAll();
+            const data = yield weather_service_1.WeatherData.getAll();
             const width = 1100;
             const height = 550;
             const margin = 35;
+            6;
             const axisWidth = width - 2 * margin;
             const axisHeight = height - 2 * margin - 1;
             const service = new weather_graph_service_1.weatherGraphService;

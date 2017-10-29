@@ -14,7 +14,6 @@ export class WeatherData {
 
         let lat = 59.3669;
         let lon = 17.9672;
-
         var promise = await new Promise<Position>(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         });
@@ -63,7 +62,7 @@ export class WeatherData {
                     wind_speed: params.ws,
                 };
             });
-            return weatherData;
+            return weatherData.slice(0, 30);
         }
     };
 
