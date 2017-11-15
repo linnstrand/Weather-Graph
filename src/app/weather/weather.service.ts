@@ -8,35 +8,55 @@ class weatherResponse {
     public ws: number;
 }
 
+class Coordinates {
+    public lat: number;
+    public lon: number;
+}
+
 @Injectable()
 export class WeatherService {
 
     constructor(private http: Http) { }
 
-    getAll(): Promise<Weather[]> {
+    getCoordinates(): Promise<Coordinates> {
+        let coordinates: Coordinates = {
+            lat: 59.3669,
+            lon: 17.9672
+        }
         if (!navigator.geolocation) {
             console.log("Geolocation is not supported by this browser.");
-            return Promise.resolve(SampleData.data);
+            // return Promise.resolve(SampleData.data);
+            return Promise.resolve(coordinates);
         };
+        return new Promise<Coordinates>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(position => {
+                coordinates.lat = position.coords.latitude;
+                coordinates.lon = position.coords.longitude;
+                resolve(coordinates);
 
-        let lat = 59.3669;
-        let lon = 17.9672;
-
-        navigator.geolocation.getCurrentPosition(position => {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            try {
-                return this.getWeatherAsync(lat, lon);
-            } catch (error) {
-                return Promise.resolve(SampleData.data);
-            }
+            },
+                err => {
+                    reject(coordinates);
+                });
         });
     }
 
-    private getWeatherAsync(lat: number, lon: number): Promise<Weather[]> {
-        let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${lon.toFixed(6)}/lat/${lat.toFixed(6)}/data.json`;
+    getAll(coordinates): Promise<Weather[]> {
+        try {
+            return this.getWeatherAsync(coordinates);
+        } catch (error) {
+            return Promise.resolve(SampleData.data);
+        }
+    }
+
+
+    private getWeatherAsync(coordinates: Coordinates): Promise<Weather[]> {
+        let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${coordinates.lon.toFixed(6)}/lat/${coordinates.lat.toFixed(6)}/data.json`;
         return this.http.get(url).toPromise()
-            .then(this.getWeatherData)
+            .then((response) => {
+                let weather = this.getWeatherData(response.json());
+                return weather;
+            })
             .catch(this.handleError);
     }
 

@@ -1,6 +1,6 @@
-import { weather } from './weather.model';
+import { Weather } from './weather.model';
 export class SampleData {
-    public static readonly data: weather[] = [
+    public static readonly data: Weather[] = [
         {
             "pcat": "no_prep",
             "temp": 22.3,
