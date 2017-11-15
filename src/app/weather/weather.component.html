@@ -1,13 +1,28 @@
-<!-- <div class="weather_latest">
-    <div class="precipitation" [class]="weather[0].pcat"></div>
-    <div class="temperature" [ngStyle]="setTemperature(weather[0].temp)">Temperature: {{ weather[0].temp }} &#8451</div>
-    <div class="wind">
-        <div class="wind_dir"></div>
-        <div class="wind_speed">
-            <span>Wind: {{ weather[0].wind_speed }} m/s</span>
-            <span class="wind_gust">( {{ weather[0].gust }} ) m/s</span>
+<div class="container" *ngIf="weatherPromise | async">
+    <div class="top-container">
+        <div id="curr-time">{{ dateTime | date : 'HH:mm:ss' }}</div>
+        <div id="curr-date">{{ dateTime | date : 'yyyy-MM-dd'}}</div>
+    </div>
+    <div class="middle-container">
+        <div class="information_wrapper">
+            <div class="next_train">
+                <div class="metro_destination">{{rainMessage}}</div>
+            </div>
         </div>
     </div>
-    <div class="symbol"></div>
-</div> -->
-<weather-graph *ngIf="weatherPromise | async" class="weather-graph" [weatherData]="weather"></weather-graph>
+    <div id="weather">
+        <div class="weather_latest">
+            <div class="precipitation" [class]="weather[0].pcat"></div>
+            <div class="temperature" [ngStyle]="setTemperature(weather[0].temp)">Temperature: {{ weather[0].temp }} &#8451;</div>
+            <div class="wind">
+                <div class="wind_dir"></div>
+                <div class="wind_speed">
+                    <span>Wind: {{ weather[0].wind_speed }} m/s</span>
+                    <span class="wind_gust">( {{ weather[0].gust }} m/s wind gusts ) </span>
+                </div>
+            </div>
+            <div class="symbol"></div>
+        </div>
+        <weather-graph class="weather-graph" [weatherData]="weather"></weather-graph>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import { Weather } from '../weather.model';
 import { WeatherService } from '../weather.service';
-import { weatherGraphService } from './weather-graph.service';
-
+import { WeatherGraphService } from './weather-graph.service';
+import { TimeFormatService } from '../../time-format.service'
 
 export async function drawGraph(data: Weather[]) {
 
@@ -11,12 +11,13 @@ export async function drawGraph(data: Weather[]) {
     const margin = 35; 6
     const axisWidth = width - 2 * margin;
     const axisHeight = height - 2 * margin - 1;
-    const service = new weatherGraphService;
 
+    const weatherGraphService = new WeatherGraphService;
+    const timeFormatService = new TimeFormatService;
 
-    const range = service.setTopLow(data);
+    const range = weatherGraphService.setTopLow(data);
 
-    const colorData = service.generateColorData(data);
+    const colorData = weatherGraphService.generateColorData(data);
 
 
     let svg = d3.selectAll('svg').remove();
@@ -58,7 +59,7 @@ export async function drawGraph(data: Weather[]) {
 
     //axis
     let xAxis = d3.axisBottom(xScale)
-        .tickFormat(x => service.multiFormat(<Date>x))
+        .tickFormat(x => timeFormatService.multiFormat(<Date>x))
         .ticks(15);
 
     let xAxisT = d3.axisTop(xScaleT);
@@ -96,11 +97,18 @@ export async function drawGraph(data: Weather[]) {
         .attr('transform', () => {
             return 'translate(' + margin + ',' + margin + ')';
         });
+
     svg.append('text')
         .attr('x', 10)
         .attr('y', 15)
         .style('text-anchor', 'middle')
         .html('&#8451;');
+
+    svg.append('text')
+        .attr('x', width - margin)
+        .attr('y', 15)
+        .style('text-anchor', 'middle')
+        .html('Wind (m/s)');
 
     //right y-axis
     svg.append('g')

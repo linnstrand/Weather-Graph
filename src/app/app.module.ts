@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { WeatherService } from './weather/weather.service';
+import { TimeFormatService } from './time-format.service';
 import { WeatherComponent } from './weather/weather.component';
 import { WeatherGraphComponent } from './weather/weather-graph/weather-graph.component'
 
@@ -19,7 +20,10 @@ import { WeatherGraphComponent } from './weather/weather-graph/weather-graph.com
     BrowserModule,
     HttpModule,
   ],
-  providers: [WeatherService,],
+  providers: [
+    WeatherService,
+    TimeFormatService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

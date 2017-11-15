@@ -2,17 +2,9 @@ import * as d3 from 'd3';
 import { Weather } from '../weather.model';
 import { Injectable } from '@angular/core';
 
-@Injectable()
-export class weatherGraphService {
 
-    formatMillisecond = d3.timeFormat('.%L');
-    formatSecond = d3.timeFormat(':%S');
-    formatMinute = d3.timeFormat('%H:%M');
-    formatHour = d3.timeFormat('%H:%M');
-    formatDay = d3.timeFormat('%a %d');
-    formatWeek = d3.timeFormat('%b %d');
-    formatMonth = d3.timeFormat('%B');
-    formatYear = d3.timeFormat('%Y');
+@Injectable()
+export class WeatherGraphService {
 
     //we have 60 temperatures (-30 to 30)
     generateColorData(data: Weather[]) {
@@ -59,12 +51,4 @@ export class weatherGraphService {
         return new Date(data[data.length - 1].time);
     }
 
-    multiFormat(date: Date) {
-        return (
-            d3.timeHour(date) < date ? this.formatMinute :
-                d3.timeDay(date) < date ? this.formatHour :
-                    d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? this.formatDay : this.formatWeek) :
-                        d3.timeYear(date) < date ? this.formatMonth :
-                            this.formatYear)(date);
-    }
 }

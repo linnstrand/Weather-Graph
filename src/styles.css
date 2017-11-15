@@ -7,11 +7,55 @@ body {
     color: #fff;
 }
 
+
+.container {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top-container {
+    margin: 25px;
+}
+
+.weather {
+    margin: 5px 0;
+}
+
 #weather {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     padding: 25px;
+}
+
+.weather_latest {
+    font-size: 38px;
+    line-height: 48px;
+    margin: 20px 0 10px 0;
+}
+
+
+#curr-time {
+    text-align: center;
+    font-size: 10em;
+}
+
+#curr-date {
+    text-align: center;
+    font-size: 64px;
+    margin-bottom: 25px;
+}
+
+.middle-container {
+    display: flex;
+}
+
+.information_wrapper {
+    padding: 25px;
+    margin-left: 20px;
+    flex-grow: 1;
 }
 
 path,

@@ -2,10 +2,16 @@ import { Weather } from './weather.model';
 import { SampleData } from './sample-data'
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { TimeFormatService } from '../time-format.service'
 
 class weatherResponse {
     public t: number;
+    public wd: number;
     public ws: number;
+    public gust: number;
+    public pcat: number;
+    public Wsymb: number;
+    public pmedian: number;
 }
 
 class Coordinates {
@@ -16,7 +22,7 @@ class Coordinates {
 @Injectable()
 export class WeatherService {
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private timeFormatService: TimeFormatService) { }
 
     getCoordinates(): Promise<Coordinates> {
         let coordinates: Coordinates = {
@@ -25,7 +31,6 @@ export class WeatherService {
         }
         if (!navigator.geolocation) {
             console.log("Geolocation is not supported by this browser.");
-            // return Promise.resolve(SampleData.data);
             return Promise.resolve(coordinates);
         };
         return new Promise<Coordinates>((resolve, reject) => {
@@ -49,6 +54,15 @@ export class WeatherService {
         }
     }
 
+    getNextRainMessage(weather: Weather[]): string {
+        var nextRain = weather.find(d => {
+            return d.pcat != 'no_prep';
+        });
+        if (nextRain && nextRain.time) {
+            return 'Expect ' + nextRain.pcat + ' at ' + this.timeFormatService.longDate(new Date(nextRain.time));
+        }
+        return '';
+    }
 
     private getWeatherAsync(coordinates: Coordinates): Promise<Weather[]> {
         let url = `https://opendata-download-metfcst.smhi.se/api/category/pmp2g/version/2/geotype/point/lon/${coordinates.lon.toFixed(6)}/lat/${coordinates.lat.toFixed(6)}/data.json`;
@@ -70,11 +84,17 @@ export class WeatherService {
                     time: t.validTime,
                     temp: params.t,
                     wind_speed: params.ws,
+                    gust: params.gust,
+                    pcat: this.getPrecipitation(params.pcat),
                 };
             });
             return weatherData.slice(0, 30);
         }
     };
+
+    private getPrecipitation(index: number) {
+        return ['no_prep', 'snow', 'snow_rain', 'rain', 'drizzle', 'freeze_rain', 'freeze_drizzle'][index];
+    }
 
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
