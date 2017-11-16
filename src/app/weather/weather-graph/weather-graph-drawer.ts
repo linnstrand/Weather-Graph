@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
-import { Weather } from '../weather.model';
-import { WeatherService } from '../weather.service';
+import { Weather } from '@weather/weather.model';
+import { WeatherService } from '@weather/weather.service';
 import { WeatherGraphService } from './weather-graph.service';
-import { TimeFormatService } from '../../time-format.service'
+import { TimeFormatService } from '@app/time-format.service'
 
 export async function drawGraph(data: Weather[]) {
 
     const width = 1100;
     const height = 550;
-    const margin = 35; 6
+    const margin = 35; 
     const axisWidth = width - 2 * margin;
     const axisHeight = height - 2 * margin - 1;
 
@@ -99,15 +99,15 @@ export async function drawGraph(data: Weather[]) {
         });
 
     svg.append('text')
-        .attr('x', 10)
-        .attr('y', 15)
-        .style('text-anchor', 'middle')
+        .attr('x', 20)
+        .attr('y', 20)
+        .classed('axis-label', true)
         .html('&#8451;');
 
     svg.append('text')
+        .classed('axis-label', true)
         .attr('x', width - margin)
-        .attr('y', 15)
-        .style('text-anchor', 'middle')
+        .attr('y', 20)
         .html('Wind (m/s)');
 
     //right y-axis

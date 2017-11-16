@@ -1,8 +1,8 @@
-import { Weather } from './weather.model';
-import { SampleData } from './sample-data'
+import { Weather } from 'app/weather/weather.model';
+import { SampleData } from 'app/weather/sample-data'
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { TimeFormatService } from '../time-format.service'
+import { TimeFormatService } from  'app/time-format.service' //'../time-format.service'
 
 class weatherResponse {
     public t: number;
@@ -59,7 +59,7 @@ export class WeatherService {
             return d.pcat != 'no_prep';
         });
         if (nextRain && nextRain.time) {
-            return 'Expect ' + nextRain.pcat + ' at ' + this.timeFormatService.longDate(new Date(nextRain.time));
+            return 'Likely ' + nextRain.pcat + ' ' + this.timeFormatService.longDate(new Date(nextRain.time));
         }
         return '';
     }
@@ -93,7 +93,7 @@ export class WeatherService {
     };
 
     private getPrecipitation(index: number) {
-        return ['no_prep', 'snow', 'snow_rain', 'rain', 'drizzle', 'freeze_rain', 'freeze_drizzle'][index];
+        return ['no_prep', 'Snow', 'Snow and rain', 'Rain', 'Drizzle', 'Freezing rain', 'Freezing drizzle'][index];
     }
 
     private handleError(error: any): Promise<any> {

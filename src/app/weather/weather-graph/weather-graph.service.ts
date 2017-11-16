@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { Weather } from '../weather.model';
+import { Weather } from '@weather/weather.model';
 import { Injectable } from '@angular/core';
 
 

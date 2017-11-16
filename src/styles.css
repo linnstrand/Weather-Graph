@@ -13,10 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-}
-
-.top-container {
-    margin: 25px;
+    width: 1200px;
 }
 
 .weather {
@@ -31,21 +28,20 @@ body {
 }
 
 .weather_latest {
-    font-size: 38px;
-    line-height: 48px;
-    margin: 20px 0 10px 0;
+    font-size: 32px;
+    margin: 20px 0 10px 40px;
+    line-height: 42px;
 }
 
 
 #curr-time {
     text-align: center;
-    font-size: 10em;
+    font-size: 5em;
 }
 
 #curr-date {
     text-align: center;
     font-size: 64px;
-    margin-bottom: 25px;
 }
 
 .middle-container {
@@ -82,6 +78,10 @@ g.tick line {
     flex-grow: 1;
 }
 
+.axis-label {
+    font-size: 16px;
+    text-anchor: middle;
+}
 /* circle {
     fill:magenta;
 } */
