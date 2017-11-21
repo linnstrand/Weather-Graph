@@ -23,7 +23,7 @@ export class TimeFormatService {
   }
 
   longDate(date: Date) {
-    let format = timeFormat("%D at %H:%M");
+    let format = timeFormat("%d at %H:%M");
     if (new Date(Date.now()).setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0)) {
       format = timeFormat("%H:%M");
     }
