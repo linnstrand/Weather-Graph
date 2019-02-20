@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { WeatherService } from './weather/weather.service';
 import { TimeFormatService } from './time-format.service';
@@ -18,7 +16,7 @@ import { WeatherGraphComponent } from './weather/weather-graph/weather-graph.com
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
   ],
   providers: [
     WeatherService,

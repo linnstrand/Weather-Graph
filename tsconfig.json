@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,8 +18,13 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@app/*": ["app/*"],
-      "@weather/*": ["app/weather/*"]
-    }
+      "@app/*": [
+        "app/*"
+      ],
+      "@weather/*": [
+        "app/weather/*"
+      ]
+    },
+    "module": "es2015"
   }
 }
